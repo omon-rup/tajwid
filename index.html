@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Belajar Tajwid</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0E5A57">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EDF2EF;--ink:#13292B;--muted:#4C6366;--card:#FFFFFF;--line:#C9D6D1;--brand:#0E5A57;--onbrand:#FFFFFF;
+  --izhhar:#A85F00;--idgham:#1B7F3B;--iqlab:#A4287F;--ikhfa:#1F5FBF;
+  --ok:#1B7F3B;--bad:#B3261E;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1B1C;--ink:#E5EFEC;--muted:#9DB4B1;--card:#142526;--line:#2A4042;--brand:#5FC4BC;--onbrand:#0D1B1C;
+    --izhhar:#F0A63A;--idgham:#5CCB82;--iqlab:#E27BC0;--ikhfa:#7BA8F5;--ok:#5CCB82;--bad:#FF8A80;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1B1C;--ink:#E5EFEC;--muted:#9DB4B1;--card:#142526;--line:#2A4042;--brand:#5FC4BC;--onbrand:#0D1B1C;
+  --izhhar:#F0A63A;--idgham:#5CCB82;--iqlab:#E27BC0;--ikhfa:#7BA8F5;--ok:#5CCB82;--bad:#FF8A80;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--brand)}
+code{font-size:14px;background:var(--card);border:1px solid var(--line);padding:1px 6px;border-radius:6px}
+.wrap{max-width:640px;margin:0 auto;padding:20px 18px 64px}
+.ar{font-family:Amiri,"Scheherazade New","Traditional Arabic",serif;direction:rtl;line-height:2.1}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.back{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;font:600 15px Figtree,sans-serif;cursor:pointer}
+a.back{text-decoration:none;display:inline-block}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+h1{font-size:30px;line-height:1.2;margin:8px 0 4px}
+h2{font-size:22px;margin:32px 0 8px}
+h3{font-size:18px;margin:0 0 4px}
+p{margin:0 0 12px}
+ul{padding-left:22px;margin:0 0 12px}
+li{margin-bottom:6px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.hero{padding:18px 0 10px}
+.hero .ar{font-size:76px;line-height:1.5;margin:0;color:var(--brand);text-align:right}
+.list{list-style:none;margin:20px 0 0;padding:0;border-top:1px solid var(--line)}
+.list li{margin:0}
+.list a{display:flex;align-items:center;gap:14px;padding:16px 4px;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.list .n{width:34px;height:34px;border-radius:50%;border:2px solid var(--brand);color:var(--brand);display:grid;place-items:center;font-weight:700;flex:none}
+.list .t{flex:1}
+.list .t b{display:block}
+.list .t span{font-size:14px;color:var(--muted)}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.on{background:var(--brand);border-color:var(--brand);color:var(--onbrand)}
+.hukum{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--brand);border-radius:10px;padding:16px;margin:14px 0}
+.hukum.izhhar{border-left-color:var(--izhhar)}.hukum.idgham{border-left-color:var(--idgham)}
+.hukum.iqlab{border-left-color:var(--iqlab)}.hukum.ikhfa{border-left-color:var(--ikhfa)}
+.hukum .name{font-weight:700;font-size:19px;color:var(--brand)}
+.izhhar .name{color:var(--izhhar)}.idgham .name{color:var(--idgham)}.iqlab .name{color:var(--iqlab)}.ikhfa .name{color:var(--ikhfa)}
+.letters{font-size:30px;line-height:1.6;margin:6px 0}
+.ex{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:32px;margin-top:6px}
+.t-izhhar{color:var(--izhhar)}.t-idgham{color:var(--idgham)}.t-iqlab{color:var(--iqlab)}.t-ikhfa{color:var(--ikhfa)}.t-brand{color:var(--brand)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;margin:12px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+.q-word{font-size:48px;text-align:center;margin:8px 0 14px}
+.opts{display:grid;gap:10px}
+.opt{border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:13px 14px;font:600 16px Figtree,sans-serif;text-align:left;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,transparent)}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
+.btn{border:0;background:var(--brand);color:var(--onbrand);border-radius:10px;padding:13px 20px;font:700 16px Figtree,sans-serif;cursor:pointer;margin-top:14px}
+a.btn{display:inline-block;text-decoration:none}
+.fb{margin-top:12px;font-size:15px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-bottom:14px;overflow:hidden}
+.bar div{height:100%;background:var(--brand);transition:width .25s}
+/* diagram */
+.diag{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;margin:12px 0}
+.diag svg{width:100%;height:auto;display:block}
+.dbtns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.dbtn{border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:6px 14px;font:600 14px Figtree,sans-serif;cursor:pointer}
+.dbtn.on{border-color:var(--brand);background:var(--brand);color:var(--onbrand)}
+.dinfo{font-size:15px;min-height:4.8em;margin:0}
+.mk{transition:opacity .2s}
+.mk.dim{opacity:.15}
+/* audio */
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px;margin:12px 0}
+.hbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 4px;cursor:pointer;text-align:center}
+.hbtn .ar{font-size:34px;line-height:1.4;display:block;color:var(--brand)}
+.hbtn small{font-size:12px;color:var(--muted)}
+.play{direction:ltr;border:1px solid var(--line);background:var(--bg);color:var(--brand);border-radius:50%;width:30px;height:30px;cursor:pointer;font:12px Figtree,sans-serif;margin-left:8px;vertical-align:middle;flex:none}
+.play.ay{width:auto;border-radius:99px;padding:0 10px;font:600 12px Figtree,sans-serif;color:var(--ink)}
+.inp{width:110px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:600 16px Figtree,sans-serif;margin:4px 12px 8px 0}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;max-width:90%;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+#toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* rangkuman */
+.rk{--bg:#fff;--ink:#111;--muted:#444;--card:#fff;--line:#9AA9A5;--brand:#0E5A57;background:#fff;color:#111;padding:18px;border:1px solid var(--line);border-radius:10px}
+.rk h1{font-size:26px}
+.rk h2{font-size:18px;margin:20px 0 6px;color:var(--brand)}
+.rk table{width:100%;border-collapse:collapse;margin:4px 0 12px;font-size:14px;line-height:1.5}
+.rk th,.rk td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+.rk th{background:#E6EFEC}
+.rk td.ar{font-size:22px;line-height:1.7;text-align:left}
+@media print{
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .noprint,header.top,#toast{display:none!important}
+  .rk{border:0;padding:0}
+  .rk h2{break-after:avoid}
+  .rk table,.rk tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const t=(k,s)=>'<span class="t-'+k+'">'+s+'</span>';
+const B=s=>t("brand",s);
+
+/* ===== DIAGRAM MAKHRAJ ===== */
+const KC={jauf:"brand",halq:"izhhar",lisan:"idgham",syafatain:"iqlab",khaisyum:"ikhfa"};
+const INFO={
+ all:"Pilih salah satu daerah untuk menyorotnya. Ini diagram sederhana tampak samping, bukan gambar anatomi lengkap.",
+ jauf:"Al-Jauf: rongga mulut dan tenggorokan. Tempat keluar huruf mad (ا و ي). 1 makhraj.",
+ halq:"Al-Halq: tenggorokan. Pangkal (ء ه), tengah (ع ح), ujung (غ خ). 3 makhraj.",
+ lisan:"Al-Lisan: lidah, 10 makhraj. Pangkal lidah (ق ك), tengah lidah (ج ش ي), ujung lidah (ل ن ر ط د ت ص س ز ظ ذ ث). Pinggir lidah (ض) tidak tampak dari samping.",
+ syafatain:"Asy-Syafatain: dua bibir. ف dari bibir bawah dan gigi seri atas; ب م و dari dua bibir. 2 makhraj.",
+ khaisyum:"Al-Khaisyum: rongga hidung. Tempat keluar ghunnah (dengung). 1 makhraj."
+};
+function pill(k,x,y,w,txt){
+  return '<g class="mk '+k+'" data-k="'+k+'" transform="translate('+x+','+y+')"><rect x="'+(-w/2)+'" y="-10" width="'+w+'" height="20" rx="10" style="fill:var(--'+KC[k]+')"/><text y="4" text-anchor="middle" style="fill:var(--bg);font:700 11px Figtree,sans-serif">'+txt+'</text></g>';
+}
+function diagram(){
+  const names=[["all","Semua"],["jauf","Jauf"],["halq","Halq"],["lisan","Lisan"],["syafatain","Syafatain"],["khaisyum","Khaisyum"]];
+  return '<div class="diag"><svg viewBox="0 0 340 280" role="img" aria-label="Diagram sederhana tempat keluar huruf, tampak samping">'+
+   '<path d="M 70 270 L 70 165 C 35 120 55 30 135 20 C 205 12 250 45 256 88 L 272 110 L 296 134 L 268 146 C 282 152 284 160 268 166 C 284 172 284 182 266 188 C 268 208 250 228 214 234 L 200 270" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linejoin="round"/>'+
+   '<path d="M 258 152 C 240 138 190 140 150 158 L 142 178" fill="none" stroke="var(--muted)" stroke-width="2"/>'+
+   '<path d="M 262 124 C 230 120 180 126 150 150" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/>'+
+   '<path d="M 150 240 C 140 205 170 188 205 184 C 235 181 256 178 262 176 C 255 198 225 206 200 208 C 178 210 165 222 168 240 Z" style="fill:var(--line)" stroke="var(--muted)" stroke-width="2"/>'+
+   '<path d="M 134 162 C 126 190 128 225 132 252" fill="none" stroke="var(--muted)" stroke-width="2"/>'+
+   pill("jauf",196,158,56,"rongga")+
+   pill("halq",104,178,52,"ujung")+pill("halq",104,208,52,"tengah")+pill("halq",104,238,52,"pangkal")+
+   pill("lisan",166,202,56,"pangkal")+pill("lisan",224,192,52,"tengah")+pill("lisan",252,164,46,"ujung")+
+   pill("syafatain",316,166,40,"bibir")+
+   pill("khaisyum",230,108,54,"hidung")+
+   '</svg>'+
+   '<div class="dbtns">'+names.map(n=>'<button class="dbtn'+(n[0]==="all"?" on":"")+'" data-d="'+n[0]+'">'+n[1]+'</button>').join("")+'</div>'+
+   '<p class="dinfo" id="dinfo" aria-live="polite">'+INFO.all+'</p></div>';
+}
+
+/* ===== HURUF DAN REKAMAN SENDIRI ===== */
+const HURUF=[["ء","Halq"],["ا","Jauf"],["ب","Bibir"],["ت","Lidah"],["ث","Lidah"],["ج","Lidah"],["ح","Halq"],["خ","Halq"],["د","Lidah"],["ذ","Lidah"],["ر","Lidah"],["ز","Lidah"],["س","Lidah"],["ش","Lidah"],["ص","Lidah"],["ض","Lidah"],["ط","Lidah"],["ظ","Lidah"],["ع","Halq"],["غ","Halq"],["ف","Bibir"],["ق","Lidah"],["ك","Lidah"],["ل","Lidah"],["م","Bibir"],["ن","Lidah"],["ه","Halq"],["و","Bibir"],["ي","Lidah"]];
+const pad=n=>(n<10?"0":"")+n;
+function hurufGrid(){
+  return '<div class="hgrid">'+HURUF.map((h,i)=>'<button class="hbtn" data-src="audio/huruf/'+pad(i+1)+'.mp3" aria-label="Putar huruf '+h[0]+'"><span class="ar">'+h[0]+'</span><small>'+h[1]+'</small></button>').join("")+'</div>';
+}
+
+/* ===== AUDIO AYAT (Al Quran Cloud, qari Alafasy) ===== */
+const AYAH=[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+function gnum(s,a){let n=a;for(let i=0;i<s-1;i++)n+=AYAH[i];return n}
+function ayahURL(s,a){return "https://cdn.islamic.network/quran/audio/128/ar.alafasy/"+gnum(s,a)+".mp3"}
+function refURL(r){const p=r.split(":");return ayahURL(parseInt(p[0],10),parseInt(p[1],10))}
+const REF={
+ "3-1-1":"2:62","3-1-2":"2:197","3-1-3":"12:6",
+ "3-2-1":"2:8","3-2-2":"2:5","3-2-3":"2:173",
+ "3-3-1":"2:27","3-3-2":"31:28",
+ "3-4-1":"2:25","3-4-2":"2:97","3-4-3":"2:85",
+ "4-1-1":"3:101","4-1-2":"105:4",
+ "4-2-1":"39:34","4-2-2":"2:249",
+ "4-3-1":"2:25","4-3-2":"1:7","4-3-3":"1:7",
+ "5-1-1":"2:60","5-1-2":"2:16",
+ "5-2-1":"3:69","5-2-2":"11:42",
+ "5-3-1":"23:93","5-3-2":"77:20",
+ "6-2-1":"110:1","6-2-2":"2:19",
+ "6-3-1":"108:1","6-3-2":"2:235",
+ "6-4-1":"1:2","6-4-2":"1:5","6-4-3":"1:3",
+ "6-5-1":"106:4","6-5-2":"106:3",
+ "6-6-1":"1:7","6-6-2":"69:1",
+ "6-7-1":"2:25","6-7-2":"3:173",
+ "6-8-1":"17:3","6-8-2":"104:3",
+ "6-9-1":"4:11",
+ "7-1-1":"2:5","7-2-1":"2:3","7-3-1":"1:2",
+ "7-4-1":"4:43",
+ "8-1-1":"1:2","8-1-2":"12:6",
+ "8-2-1":"1:7","8-2-2":"1:5",
+ "8-5-2":"2:28","8-6-2":"1:1",
+ "8-7-1":"112:1",
+ "8-7-2":"113:1",
+ "9-1-1":"11:41","9-2-1":"12:11","9-3-1":"41:44",
+ "9-4-1":"75:27","9-4-2":"83:14","9-5-1":"49:11",
+ "9-6-1":"1:6","9-6-2":"1:2","9-7-1":"1:7","9-7-2":"112:1",
+ "9-8-1":"2:1","9-8-2":"36:1","9-8-3":"40:1","9-8-4":"19:1",
+ "9-9-1":"16:98","9-10-1":"1:1",
+ "0-1-1":"73:4"
+};
+
+/* ===== BAB 3: data nun mati dan tanwin ===== */
+const N3=[
+ {k:"izhhar",name:"Izhhar Halqi",mean:"Jelas",how:"Dibaca jelas tanpa dengung, karena huruf berikutnya keluar dari tenggorokan.",
+  letters:"ء هـ ع ح غ خ",ex:[t("izhhar","مَنْ آ")+"مَنَ",t("izhhar","مِنْ خَ")+"يْرٍ",t("izhhar","عَلِيمٌ حَ")+"كِيمٌ"]},
+ {k:"idgham",name:"Idgham",mean:"Memasukkan",how:"Nun mati/tanwin dilebur ke huruf berikutnya. Syarat: huruf berikutnya berada di kata yang berbeda. Ada dua jenis: bighunnah (ي ن م و, dengan dengung) dan bilaghunnah (ل ر, tanpa dengung).",
+  letters:"ي ر م ل و ن",ex:[t("idgham","مَنْ يَّ")+"قُولُ",t("idgham","مِنْ رَّ")+"بِّهِمْ",t("idgham","غَفُورٌ رَّ")+"حِيمٌ"]},
+ {k:"iqlab",name:"Iqlab",mean:"Mengubah",how:"Nun mati/tanwin diubah menjadi bunyi mim lalu didengungkan, dengan bibir dirapatkan ringan.",
+  letters:"ب",ex:[t("iqlab","مِنْ بَ")+"عْدِ",t("iqlab","سَمِيعٌ بَ")+"صِيرٌ"]},
+ {k:"ikhfa",name:"Ikhfa' Haqiqi",mean:"Menyamarkan",how:"Dibaca samar antara izhhar dan idgham, dengan dengung. Lidah tidak menyentuh makhraj nun.",
+  letters:"ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك",ex:[t("ikhfa","مِنْ قَ")+"بْلُ",t("ikhfa","مَنْ كَ")+"انَ",t("ikhfa","أَنْتُ")+"مْ"]}
+];
+const O3=["Izhhar","Idgham bighunnah","Idgham bilaghunnah","Iqlab","Ikhfa'"];
+const QZ3=[
+ {w:"مِنْ خَيْرٍ",a:"Izhhar",e:"Nun mati bertemu خ (huruf halq): izhhar."},
+ {w:"مِنْ بَعْدِ",a:"Iqlab",e:"Nun mati bertemu ب: iqlab, dibaca seperti mim."},
+ {w:"مَنْ يَقُولُ",a:"Idgham bighunnah",e:"Nun mati bertemu ي di kata berbeda: idgham bighunnah."},
+ {w:"مِنْ رَبِّهِمْ",a:"Idgham bilaghunnah",e:"Nun mati bertemu ر: idgham bilaghunnah, tanpa dengung."},
+ {w:"مَنْ كَانَ",a:"Ikhfa'",e:"Nun mati bertemu ك: ikhfa'."},
+ {w:"عَلِيمٌ حَكِيمٌ",a:"Izhhar",e:"Tanwin bertemu ح (huruf halq): izhhar."}
+].map(x=>({q:"Apa hukum bacaan yang tepat?",ar:x.w,o:O3,a:O3.indexOf(x.a),e:x.e}));
+
+/* ===== SEMUA BAB ===== */
+const BAB=[
+{id:1,t:"Makhrojul Huruf",ar:"مَخَارِجُ الْحُرُوفِ",s:"Tempat keluarnya huruf",
+ sec:[
+ {h:"Apa itu makhraj",p:"Makhraj adalah tempat keluarnya huruf. Menurut pendapat yang dipilih mayoritas ulama qiraat, makhraj ada 17, dikelompokkan dalam 5 daerah. Cara mengetahui makhraj sebuah huruf: ucapkan huruf itu dengan sukun setelah hamzah (misalnya أَبْ، أَتْ، أَثْ), lalu rasakan di mana suara tertahan."},
+ {h:"Diagram makhraj",p:"Tekan tombol untuk menyorot tiap daerah.",html:diagram},
+ {h:"1. Al-Jauf (rongga mulut dan tenggorokan)",cards:[
+  {t:"1 makhraj",ar:"ا و ي",d:"Khusus untuk huruf mad: alif setelah fathah, wawu sukun setelah dhammah, dan ya sukun setelah kasrah. Suara mengalir tanpa ada titik yang menahan.",ex:[B("قَا")+"لَ",B("يَقُو")+"لُ",B("قِي")+"لَ"]}]},
+ {h:"2. Al-Halq (tenggorokan): 3 makhraj",cards:[
+  {t:"Aqshal halq (pangkal tenggorokan)",ar:"ء ه",d:"Bagian tenggorokan paling dalam, paling dekat ke dada."},
+  {t:"Wasathul halq (tengah tenggorokan)",ar:"ع ح",d:"Bagian tengah tenggorokan."},
+  {t:"Adnal halq (ujung tenggorokan)",ar:"غ خ",d:"Bagian tenggorokan paling dekat ke mulut."}]},
+ {h:"3. Al-Lisan (lidah): 10 makhraj",cards:[
+  {t:"Pangkal lidah paling belakang",ar:"ق",d:"Pangkal lidah paling belakang bertemu langit-langit lunak."},
+  {t:"Pangkal lidah, sedikit lebih ke depan",ar:"ك",d:"Sedikit di depan makhraj ق, bertemu langit-langit."},
+  {t:"Tengah lidah",ar:"ج ش ي",d:"Tengah lidah bertemu langit-langit keras. Untuk ي yang bukan huruf mad."},
+  {t:"Pinggir lidah",ar:"ض",d:"Pinggir lidah (biasanya sisi kiri, boleh kanan atau keduanya) bertemu geraham atas."},
+  {t:"Pinggir sampai ujung lidah",ar:"ل",d:"Pinggir lidah sampai ujung lidah, bertemu gusi atas."},
+  {t:"Ujung lidah (nun)",ar:"ن",d:"Ujung lidah bertemu gusi atas, sedikit lebih rendah dari ل."},
+  {t:"Ujung lidah (ra)",ar:"ر",d:"Seperti ن tetapi sedikit lebih masuk ke punggung lidah."},
+  {t:"Ujung lidah dan pangkal gigi seri atas",ar:"ط د ت"},
+  {t:"Ujung lidah dan ujung gigi seri bawah",ar:"ص س ز",d:"Ujung lidah mendekati gigi seri, suara mendesis."},
+  {t:"Ujung lidah dan ujung gigi seri atas",ar:"ظ ذ ث",d:"Ujung lidah sedikit keluar menyentuh ujung gigi seri atas."}]},
+ {h:"4. Asy-Syafatain (dua bibir): 2 makhraj",cards:[
+  {t:"Perut bibir bawah dan ujung gigi seri atas",ar:"ف"},
+  {t:"Dua bibir",ar:"ب م و",d:"ب dan م: kedua bibir dirapatkan. و (bukan mad): kedua bibir dibulatkan."}]},
+ {h:"5. Al-Khaisyum (rongga hidung): 1 makhraj",cards:[
+  {t:"Tempat keluarnya ghunnah",ar:"نّ مّ",d:"Suara dengung pada nun dan mim bertasydid, serta pada hukum ikhfa', idgham bighunnah, dan iqlab."}]},
+ {h:"Ringkasan",p:"1 (Jauf) + 3 (Halq) + 10 (Lisan) + 2 (Syafatain) + 1 (Khaisyum) = 17 makhraj."},
+ {h:"Daftar huruf",p:"Hamzah dan alif dihitung terpisah, jadi totalnya 29. Label di bawah huruf menunjukkan daerah makhrajnya. Ketuk huruf untuk memutar rekaman, jika file di folder audio/huruf sudah Anda siapkan.",html:hurufGrid}
+ ],
+ qz:[
+ {q:"Huruf ع keluar dari mana?",o:["Aqshal halq","Wasathul halq","Adnal halq","Dua bibir"],a:1,e:"ع dan ح keluar dari tengah tenggorokan (wasathul halq)."},
+ {q:"Huruf ف keluar dari mana?",o:["Dua bibir","Perut bibir bawah dan ujung gigi seri atas","Ujung lidah dan gigi seri atas","Tengah lidah"],a:1,e:"ف keluar dari perut bibir bawah yang bertemu ujung gigi seri atas."},
+ {q:"Berapa jumlah makhraj menurut pendapat yang masyhur?",o:["14","17","19","29"],a:1,e:"Jumlahnya 17 makhraj dalam 5 daerah."},
+ {q:"Huruf ظ ذ ث keluar dari mana?",o:["Ujung lidah dan ujung gigi seri atas","Pangkal lidah","Ujung lidah dan gusi atas","Ujung lidah dan ujung gigi seri bawah"],a:0,e:"Ketiganya disebut huruf litsawiyyah: ujung lidah bertemu ujung gigi seri atas."},
+ {q:"Huruf ق keluar dari mana?",o:["Pangkal lidah paling belakang","Tengah lidah","Ujung lidah","Dua bibir"],a:0,e:"ق keluar dari pangkal lidah paling belakang, sedikit di belakang makhraj ك."},
+ {q:"Huruf mad (ا و ي) keluar dari daerah mana?",o:["Al-Jauf","Al-Halq","Asy-Syafatain","Al-Khaisyum"],a:0,e:"Huruf mad keluar dari Al-Jauf, yaitu rongga mulut dan tenggorokan."}
+ ]},
+
+{id:2,t:"Sifat Huruf",ar:"صِفَاتُ الْحُرُوفِ",s:"Cara huruf diucapkan",
+ sec:[
+ {h:"Dua kelompok sifat",p:"Sifat huruf ada 17: 5 pasang sifat yang saling berlawanan (10 sifat) dan 7 sifat yang tidak punya lawan. Sifat menentukan cara sebuah huruf diucapkan, misalnya tebal atau tipis, tertahan atau mengalir."},
+ {h:"Sifat yang berlawanan",cards:[
+  {t:"Hams (nafas mengalir) lawan Jahr (nafas tertahan)",ar:"فَحَثَّهُ شَخْصٌ سَكَتَ",d:"Huruf hams ada 10: ف ح ث ه ش خ ص س ك ت. Semua huruf selain itu bersifat jahr."},
+  {t:"Syiddah (suara tertahan) lawan Rakhawah (suara mengalir)",ar:"أَجِدُكَ قَطَبْتَ",d:"Huruf syiddah: ء ج د ك ق ط ب ت. Di antara keduanya ada tawassuth: ل ن ع م ر (لِنْ عُمَرُ). Huruf selain itu rakhawah."},
+  {t:"Isti'la (pangkal lidah naik) lawan Istifal (turun)",ar:"خُصَّ ضَغْطٍ قِظْ",d:"Huruf isti'la: خ ص ض غ ط ق ظ, dibaca tebal (tafkhim). Huruf selain itu istifal, dibaca tipis."},
+  {t:"Ithbaq (lidah menutup) lawan Infitah (terbuka)",ar:"ص ض ط ظ",d:"Empat huruf ini ithbaq: lidah menempel ke langit-langit. Huruf selain itu infitah."},
+  {t:"Idzlaq (ringan) lawan Ishmat (berat)",ar:"ف ر م ن ل ب",d:"Enam huruf ini idzlaq: ringan diucapkan dari ujung lidah atau bibir. Huruf selain itu ishmat."}]},
+ {h:"Sifat yang tidak punya lawan",cards:[
+  {t:"Shafir",ar:"ص ز س",d:"Suara mendesis seperti siulan."},
+  {t:"Qalqalah",ar:"قُطْبُ جَدٍّ",d:"Huruf ق ط ب ج د saat sukun atau diwaqafkan memantul. Pantulan paling kuat saat waqaf."},
+  {t:"Lin",ar:"و ي",d:"Wawu atau ya sukun setelah fathah, keluar dengan lembut. Contoh: خَوْفٌ، بَيْتٌ."},
+  {t:"Inhiraf",ar:"ل ر",d:"Suara cenderung miring ke sisi atau ujung lidah."},
+  {t:"Takrir",ar:"ر",d:"Lidah berpotensi bergetar. Hanya diketahui, jangan sengaja digetarkan."},
+  {t:"Tafasysyi",ar:"ش",d:"Suara menyebar di dalam mulut."},
+  {t:"Istithalah",ar:"ض",d:"Suara memanjang di sepanjang pinggir lidah."}]}
+ ],
+ qz:[
+ {q:"Manakah huruf qalqalah?",o:["ق ط ب ج د","ص ز س","ل ر","ف ح ث"],a:0,e:"Huruf qalqalah: ق ط ب ج د (قُطْبُ جَدٍّ)."},
+ {q:"Huruf ص ض ط ظ bersifat...",o:["Ithbaq","Hams","Idzlaq","Lin"],a:0,e:"Keempatnya ithbaq: lidah menempel ke langit-langit."},
+ {q:"Lawan sifat hams adalah...",o:["Syiddah","Jahr","Istifal","Ishmat"],a:1,e:"Hams (nafas mengalir) berlawanan dengan jahr (nafas tertahan)."},
+ {q:"Manakah huruf isti'la (dibaca tebal)?",o:["غ","ب","ت","س"],a:0,e:"Huruf isti'la: خ ص ض غ ط ق ظ."},
+ {q:"Huruf ص ز س bersifat...",o:["Shafir","Qalqalah","Inhiraf","Tafasysyi"],a:0,e:"Shafir: suara mendesis seperti siulan."},
+ {q:"Sifat huruf ر yang berarti 'berpotensi bergetar' adalah...",o:["Takrir","Tafasysyi","Istithalah","Shafir"],a:0,e:"Takrir. Hanya untuk diketahui, ر tidak boleh sengaja digetarkan."}
+ ]},
+
+{id:3,t:"Nun Mati dan Tanwin",ar:"النُّونُ السَّاكِنَةُ وَالتَّنْوِينُ",s:"Izhhar, idgham, iqlab, ikhfa'",
+ leg:["izhhar","idgham","iqlab","ikhfa"],
+ sec:[
+ {p:"Nun mati (نْ) dan tanwin (ـً ـٍ ـٌ) punya empat hukum. Hukumnya ditentukan oleh huruf yang datang sesudahnya."},
+ {cards:N3.map(x=>({k:x.k,t:x.name+" (“"+x.mean+"”)",lab:"Huruf pemicu:",ar:x.letters,d:x.how,ex:x.ex}))}
+ ],qz:QZ3},
+
+{id:4,t:"Mim Mati",ar:"الْمِيمُ السَّاكِنَةُ",s:"Ikhfa' syafawi, idgham mimi, izhhar syafawi",
+ leg:["izhhar","idgham","ikhfa"],
+ sec:[
+ {p:"Mim mati (مْ) punya tiga hukum, tergantung huruf sesudahnya. Disebut “syafawi” karena makhrajnya di dua bibir (syafatain)."},
+ {cards:[
+  {k:"ikhfa",t:"Ikhfa' Syafawi",lab:"Huruf pemicu:",ar:"ب",d:"Mim mati bertemu ب. Dibaca samar dengan dengung, kedua bibir dirapatkan ringan.",ex:[t("ikhfa","يَعْتَصِمْ بِ")+"اللَّهِ",t("ikhfa","تَرْمِيهِمْ بِ")+"حِجَارَةٍ"]},
+  {k:"idgham",t:"Idgham Mimi (Mutamatsilain Shaghir)",lab:"Huruf pemicu:",ar:"م",d:"Mim mati bertemu م. Dua mim dilebur menjadi satu mim bertasydid dan didengungkan.",ex:[t("idgham","لَهُمْ مَّ")+"ا يَشَاءُونَ",t("idgham","كَمْ مِّ")+"نْ فِئَةٍ"]},
+  {k:"izhhar",t:"Izhhar Syafawi",lab:"Huruf pemicu:",ar:"semua huruf selain م dan ب",d:"Mim mati dibaca jelas tanpa dengung. Hati-hati pada huruf و dan ف: mim tidak boleh disamarkan.",ex:[t("izhhar","هُمْ فِ")+"يهَا",t("izhhar","أَنْعَمْتَ"),t("izhhar","عَلَيْهِمْ غَ")+"يْرِ"]}]}
+ ],
+ qz:[
+ {q:"Apa hukum bacaan yang tepat?",ar:"تَرْمِيهِمْ بِحِجَارَةٍ",o:["Ikhfa' syafawi","Idgham mimi","Izhhar syafawi"],a:0,e:"Mim mati bertemu ب: ikhfa' syafawi."},
+ {q:"Apa hukum bacaan yang tepat?",ar:"كَمْ مِنْ فِئَةٍ",o:["Ikhfa' syafawi","Idgham mimi","Izhhar syafawi"],a:1,e:"Mim mati bertemu م: idgham mimi."},
+ {q:"Apa hukum bacaan yang tepat?",ar:"هُمْ فِيهَا",o:["Ikhfa' syafawi","Idgham mimi","Izhhar syafawi"],a:2,e:"Mim mati bertemu ف: izhhar syafawi, dibaca jelas."},
+ {q:"Mim mati bertemu و atau ف dibaca bagaimana?",o:["Jelas, tanpa dengung","Samar dengan dengung","Dilebur ke huruf berikutnya"],a:0,e:"Keduanya izhhar syafawi. Jaga agar mim tidak disamarkan."},
+ {q:"Huruf pemicu ikhfa' syafawi adalah...",o:["ب","م","و","ف"],a:0,e:"Hanya huruf ب."},
+ {q:"Berapa jumlah hukum mim mati?",o:["2","3","4","5"],a:1,e:"Tiga: ikhfa' syafawi, idgham mimi, izhhar syafawi."}
+ ]},
+
+{id:5,t:"Macam-macam Idgham",ar:"أَقْسَامُ الْإِدْغَامِ",s:"Mutamatsilain, mutajanisain, mutaqaribain, dan lainnya",
+ sec:[
+ {h:"Pengertian",p:"Idgham berarti memasukkan satu huruf ke huruf berikutnya sehingga keduanya dibaca sebagai satu huruf bertasydid. Selain idgham nun mati/tanwin (bighunnah dan bilaghunnah, sudah dibahas di Bab 3) dan idgham mimi (Bab 4), ada tiga macam idgham menurut hubungan dua hurufnya."},
+ {h:"Idgham dua huruf",cards:[
+  {t:"Mutamatsilain",d:"Dua huruf yang sama makhraj dan sama sifatnya. Contoh di bawah adalah shaghir: huruf pertama sukun, huruf kedua berharakat.",ex:[B("اضْرِبْ بِّ")+"عَصَاكَ",B("رَبِحَتْ تِّ")+"جَارَتُهُمْ"]},
+  {t:"Mutajanisain",d:"Dua huruf yang sama makhrajnya tetapi berbeda sifatnya. Pasangan yang umum: ت dengan ط atau د, ث dengan ذ atau ظ, serta ب dengan م.",ex:[B("وَدَّت طَّ")+"ائِفَةٌ",B("ارْكَب مَّ")+"عَنَا"]},
+  {t:"Mutaqaribain",d:"Dua huruf yang makhrajnya berdekatan, atau sifatnya berdekatan. Contoh umum: ل dengan ر, serta ق dengan ك.",ex:[B("قُل رَّ")+"بِّ",B("نَخْلُقكُّ")+"م"]}]},
+ {h:"Idgham syamsiyyah",p:"Lam ta'rif (ال) yang bertemu 14 huruf syamsiyyah dilebur: ت ث د ذ ر ز س ش ص ض ط ظ ل ن. Contoh: الشَّمْسُ، الرَّحْمَنُ. Jika bertemu 14 huruf lainnya (ا ب ج ح خ ع غ ف ق ك م و ه ي), lam dibaca jelas dan disebut izhhar qamariyyah. Contoh: الْقَمَرُ."},
+ {h:"Pengingat",p:"Idgham bighunnah: ي ن م و (dengan dengung). Idgham bilaghunnah: ل ر (tanpa dengung). Keduanya hanya berlaku bila nun mati/tanwin dan huruf pemicunya berada di kata yang berbeda."}
+ ],
+ qz:[
+ {q:"Apa nama idgham ini?",ar:"اضْرِبْ بِّعَصَاكَ",o:["Mutamatsilain","Mutajanisain","Mutaqaribain","Bighunnah"],a:0,e:"ب bertemu ب: dua huruf sama makhraj dan sifat."},
+ {q:"Apa nama idgham ini?",ar:"وَدَّت طَّائِفَةٌ",o:["Mutamatsilain","Mutajanisain","Mutaqaribain","Bilaghunnah"],a:1,e:"ت bertemu ط: satu makhraj, sifat berbeda."},
+ {q:"Apa nama idgham ini?",ar:"قُل رَّبِّ",o:["Mutamatsilain","Mutajanisain","Mutaqaribain","Bighunnah"],a:2,e:"ل bertemu ر: makhraj berdekatan."},
+ {q:"Idgham untuk dua huruf yang sama makhraj dan sama sifatnya disebut...",o:["Mutamatsilain","Mutajanisain","Mutaqaribain","Syamsiyyah"],a:0,e:"Mutamatsilain (tamatsul berarti sama)."},
+ {q:"Huruf idgham bighunnah adalah...",o:["ي ن م و","ل ر","ب","ت ط د"],a:0,e:"Bighunnah: ي ن م و (يَنْمُو), dibaca dengan dengung."},
+ {q:"Lam ta'rif bertemu ش (الشَّمْسِ) dibaca...",o:["Idgham syamsiyyah","Izhhar qamariyyah","Ikhfa'","Iqlab"],a:0,e:"ش termasuk huruf syamsiyyah, jadi lam dilebur."}
+ ]},
+
+{id:6,t:"Macam-macam Mad",ar:"أَقْسَامُ الْمَدِّ",s:"Mad asli dan mad far'i",
+ sec:[
+ {h:"Mad asli (thabi'i)",cards:[
+  {t:"Mad Thabi'i",d:"Alif setelah fathah, wawu sukun setelah dhammah, atau ya sukun setelah kasrah, tanpa bertemu hamzah atau sukun sesudahnya. Panjang 2 harakat (kira-kira dua ketukan).",ex:[B("قَا")+"لَ",B("يَقُو")+"لُ",B("قِي")+"لَ"]}]},
+ {h:"Mad far'i (cabang)",p:"Mad far'i muncul ketika mad thabi'i bertemu hamzah, sukun, atau waqaf. Panjang harakat di bawah mengikuti riwayat Hafs dari Ashim, dan ada pilihan yang berbeda antar guru. Ikuti yang diajarkan guru Anda dan konsisten.",cards:[
+  {t:"Wajib Muttashil",d:"Mad thabi'i bertemu hamzah dalam satu kata. Panjang 4 atau 5 harakat.",ex:[B("جَا")+"ءَ",B("السَّمَا")+"ءِ"]},
+  {t:"Jaiz Munfashil",d:"Mad thabi'i di akhir kata bertemu hamzah di awal kata berikutnya. Panjang 2, 4, atau 5 harakat.",ex:[B("إِنَّا أَ")+"عْطَيْنَاكَ",B("فِي أَ")+"نفُسِكُمْ"]},
+  {t:"'Aridh Lissukun",d:"Mad thabi'i diikuti satu huruf di akhir kata yang diwaqafkan. Panjang 2, 4, atau 6 harakat.",ex:["الْعَا"+B("لَمِينَ"),"نَسْتَعِي"+B("نُ"),"الرَّحِي"+B("مِ")]},
+  {t:"Mad Lin",d:"Wawu atau ya sukun setelah fathah, lalu huruf sesudahnya diwaqafkan. Panjang 2, 4, atau 6 harakat.",ex:[B("خَوْ")+"فٍ",B("الْبَيْ")+"تِ"]},
+  {t:"Mad Lazim",d:"Mad thabi'i diikuti sukun asli atau tasydid dalam satu kata. Panjang 6 harakat.",ex:[B("الضَّا")+"لِّينَ",B("الْحَا")+"قَّةُ"]},
+  {t:"Mad Badal",d:"Hamzah mendahului huruf mad dalam satu kata. Panjang 2 harakat.",ex:[B("آ")+"مَنُوا",B("إِي")+"مَانًا"]},
+  {t:"Mad Shilah",d:"Ha dhamir (هـ, kata ganti “dia”) berharakat dhammah atau kasrah, diapit huruf berharakat. Shilah qashirah (diikuti selain hamzah): 2 harakat. Shilah thawilah (diikuti hamzah): 4 atau 5 harakat.",ex:["إِنَّهُ كَانَ","مَالَهُ أَخْلَدَهُ"]},
+  {t:"Mad 'Iwadh",d:"Tanwin fathah di akhir kata yang diwaqafkan dibaca alif. Panjang 2 harakat.",ex:["عَلِيمًا"]}]}
+ ],
+ qz:[
+ {q:"Apa nama mad ini?",ar:"جَاءَ",o:["Wajib muttashil","Jaiz munfashil","Mad lazim","Mad thabi'i"],a:0,e:"Mad thabi'i bertemu hamzah dalam satu kata: wajib muttashil."},
+ {q:"Apa nama mad pada kata إِنَّا di bacaan ini?",ar:"إِنَّا أَعْطَيْنَاكَ",o:["Wajib muttashil","Jaiz munfashil","Mad badal","Mad lin"],a:1,e:"Mad di akhir kata, hamzah di awal kata berikutnya: jaiz munfashil."},
+ {q:"Apa nama mad ini?",ar:"الضَّالِّينَ",o:["Mad lazim","Mad thabi'i","'Aridh lissukun","Mad shilah"],a:0,e:"Mad thabi'i diikuti tasydid dalam satu kata: mad lazim, 6 harakat."},
+ {q:"Berapa panjang mad thabi'i?",o:["2 harakat","4 harakat","5 harakat","6 harakat"],a:0,e:"Mad thabi'i selalu 2 harakat."},
+ {q:"Apa nama mad ini saat diwaqafkan?",ar:"الْعَالَمِينَ",o:["'Aridh lissukun","Mad lin","Mad lazim","Wajib muttashil"],a:0,e:"Sukun datang karena waqaf: 'aridh lissukun."},
+ {q:"Apa nama mad ini saat diwaqafkan?",ar:"خَوْفٍ",o:["Mad lin","'Aridh lissukun","Mad badal","Mad lazim"],a:0,e:"Wawu sukun setelah fathah lalu waqaf: mad lin."}
+ ]},
+
+{id:7,t:"Bab Waqaf",ar:"الْوَقْفُ وَالِابْتِدَاءُ",s:"Tanda berhenti dan memulai",
+ sec:[
+ {h:"Pengertian",ul:["Waqaf: berhenti sejenak di akhir kata sambil mengambil nafas, dengan niat melanjutkan bacaan.","Saktah: berhenti sejenak tanpa mengambil nafas.","Qath': berhenti total, mengakhiri bacaan.","Ibtida': memulai bacaan setelah waqaf."]},
+ {h:"Jenis waqaf menurut maknanya",cards:[
+  {t:"Waqaf Tam",d:"Berhenti pada kalimat yang sempurna dan tidak berkaitan dengan kalimat sesudahnya, biasanya di akhir kisah atau ayat. Boleh memulai dari kalimat berikutnya.",ex:["أُولَٰئِكَ هُمُ الْمُفْلِحُونَ"]},
+  {t:"Waqaf Kafi",d:"Kalimat sudah sempurna secara lafaz, tetapi maknanya masih berkaitan dengan kalimat sesudahnya. Baik berhenti, dan baik memulai dari sesudahnya.",ex:["وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ"]},
+  {t:"Waqaf Hasan",d:"Berhenti di sini baik, tetapi memulai dari kata sesudahnya kurang baik karena masih terkait lafaz. Sebaiknya mengulang dari kata sebelumnya.",ex:["الْحَمْدُ لِلَّهِ"]},
+  {t:"Waqaf Qabih",d:"Berhenti yang merusak makna atau menimbulkan salah paham. Dihindari kecuali terpaksa, misalnya kehabisan nafas.",ex:["لَا تَقْرَبُوا الصَّلَاةَ"]}]},
+ {h:"Tanda waqaf di mushaf",p:"Tanda ini mengikuti Mushaf Standar Indonesia. Mushaf lain bisa sedikit berbeda.",ul:[
+  "م : waqaf lazim, sebaiknya berhenti karena jika dilanjutkan makna bisa berubah.",
+  "ط : waqaf muthlaq, lebih baik berhenti.",
+  "ج : waqaf jaiz, boleh berhenti atau lanjut.",
+  "ز : mujawwaz, boleh berhenti, tetapi lanjut lebih baik.",
+  "ص : murakhkhash, boleh berhenti karena kalimat panjang, lanjut lebih baik.",
+  "قلى : berhenti lebih utama. صلى : lanjut lebih utama.",
+  "لا : jangan berhenti. Jika di ujung ayat, boleh berhenti.",
+  "Tiga titik (mu'anaqah): berhenti di salah satu dari dua tempat bertanda, tidak di keduanya."]},
+ {h:"Cara membaca huruf akhir saat waqaf",ul:[
+  "Huruf akhir berharakat fathah, kasrah, atau dhammah dibaca sukun: الْعَالَمِينَ.",
+  "Tanwin fathah dibaca alif: عَلِيمًا dibaca عَلِيمَا.",
+  "Tanwin kasrah atau dhammah dibuang dan dibaca sukun: عَلِيمٌ dibaca عَلِيمْ.",
+  "Ta marbutah (ة) dibaca ha sukun: رَحْمَةٌ dibaca رَحْمَهْ.",
+  "Isymam (memajukan bibir tanpa suara untuk dhammah) dan raum (membunyikan harakat dengan lirih) adalah cara lain pada dhammah dan kasrah. Pelajari langsung dari guru."]},
+ {h:"Saktah dalam riwayat Hafs",p:"Ada empat tempat saktah: Al-Kahf ayat 1 (setelah عِوَجًا), Yasin ayat 52 (setelah مَرْقَدِنَا), Al-Qiyamah ayat 27 (pada مَنْ رَاقٍ), dan Al-Muthaffifin ayat 14 (pada بَلْ رَانَ). Berhenti sejenak sekitar 2 harakat, tanpa mengambil nafas."}
+ ],
+ qz:[
+ {q:"Tanda م di mushaf berarti...",o:["Waqaf lazim, sebaiknya berhenti","Boleh berhenti atau lanjut","Jangan berhenti","Berhenti total"],a:0,e:"م adalah tanda waqaf lazim."},
+ {q:"Tanda لا berarti...",o:["Jangan berhenti di situ","Wajib berhenti","Boleh berhenti atau lanjut","Mulai bacaan"],a:0,e:"لا artinya jangan berhenti. Jika di ujung ayat, boleh berhenti."},
+ {q:"Ta marbutah (ة) saat waqaf dibaca...",o:["Ha sukun","Ta berharakat","Alif","Dihilangkan"],a:0,e:"رَحْمَةٌ dibaca رَحْمَهْ saat waqaf."},
+ {q:"Tanwin fathah saat waqaf dibaca...",o:["Alif","Nun","Sukun saja","Ha"],a:0,e:"عَلِيمًا dibaca عَلِيمَا saat waqaf."},
+ {q:"Tanda ج berarti...",o:["Boleh berhenti atau lanjut","Wajib berhenti","Jangan berhenti","Lanjut lebih utama"],a:0,e:"ج adalah waqaf jaiz."},
+ {q:"Saktah adalah...",o:["Berhenti sejenak tanpa mengambil nafas","Berhenti dengan mengambil nafas","Berhenti total","Memulai bacaan"],a:0,e:"Saktah: berhenti sejenak tanpa nafas."}
+ ]}
+];
+
+/* ===== BAB 8: KESALAHAN MEMBACA (LAHN) ===== */
+BAB.push({id:8,t:"Kesalahan Membaca (Lahn)",ar:"اللَّحْنُ فِي الْقِرَاءَةِ",s:"Lahn jali dan lahn khafi",
+ sec:[
+ {h:"Apa itu lahn",p:"Lahn (اللَّحْنُ) berarti kesalahan atau penyimpangan dalam membaca Al-Qur'an dari cara yang benar. Para ulama membaginya menjadi dua tingkat: lahn jali (kesalahan nyata) dan lahn khafi (kesalahan samar). Tujuan mempelajarinya bukan untuk menakut-nakuti, tetapi supaya kita bisa mengenali kesalahan dan memperbaikinya bersama guru."},
+ {h:"Lahn jali (kesalahan nyata)",p:"Kesalahan yang jelas dan bisa dikenali bahkan oleh orang awam, karena merusak lafaz dan sering mengubah makna. Menurut para ulama qiraat hukumnya dilarang (haram), terutama bila disengaja atau dibiarkan padahal mampu diperbaiki. Dalam salat, kesalahan yang mengubah makna (terutama pada Al-Fatihah) dapat memengaruhi sahnya bacaan, jadi tanyakan kepada guru atau ustadz Anda.",cards:[
+  {t:"Mengganti huruf",d:"Satu huruf diucapkan seperti huruf lain. Contoh: ح diucapkan seperti ه, sehingga الْحَمْدُ terdengar seperti الْهَمْدُ. Contoh lain: ع diucapkan seperti ء, sehingga عَلِيمٌ (Maha Mengetahui) terdengar seperti أَلِيمٌ (pedih). Sebagai gambaran sederhana, قَلْب (hati) berubah menjadi كَلْب (anjing) hanya karena ق diucapkan seperti ك. Bacaan yang benar ada pada contoh di bawah.",ex:["الْحَمْدُ","عَلِيمٌ حَكِيمٌ"]},
+  {t:"Mengubah harakat",d:"Fathah, kasrah, atau dhammah tertukar. Contoh: أَنْعَمْتَ (“Engkau telah memberi nikmat”) berubah menjadi أَنْعَمْتُ (“aku telah memberi nikmat”). إِيَّاكَ نَعْبُدُ berubah menjadi إِيَّاكِ نَعْبُدُ. Bacaan yang benar ada pada contoh di bawah.",ex:["أَنْعَمْتَ","إِيَّاكَ نَعْبُدُ"]},
+  {t:"Menambah atau mengurangi",d:"Menambah huruf yang tidak ada, menghilangkan huruf, menghilangkan tasydid, atau mengubah sukun menjadi berharakat (dan sebaliknya)."}]},
+ {h:"Lahn khafi (kesalahan samar)",p:"Kesalahan halus yang tidak mengubah makna dan biasanya baru terasa oleh orang yang mempelajari tajwid. Sebagian besar ulama menilainya makruh, sebagian lain lebih tegas. Bagaimanapun, kita dianjurkan terus memperbaikinya.",cards:[
+  {t:"Panjang mad tidak sesuai",d:"Mad terlalu pendek, terlalu panjang, atau panjangnya berubah-ubah dalam satu bacaan.",ex:["قَالَ","يَقُولُ"]},
+  {t:"Ghunnah kurang atau berlebihan",d:"Nun dan mim bertasydid wajib berdengung sekitar 2 harakat, tidak lebih dan tidak kurang.",ex:["إِنَّ","ثُمَّ"]},
+  {t:"Tafkhim dan tarqiq tidak tepat",d:"Huruf tebal dibaca tipis atau sebaliknya. Contoh: lam pada lafaz Allah dibaca tebal setelah fathah atau dhammah, dan tipis setelah kasrah.",ex:["قَالَ اللَّهُ","بِسْمِ اللَّهِ"]},
+  {t:"Qalqalah tidak terdengar",d:"Huruf ق ط ب ج د saat sukun atau waqaf harus memantul, terutama saat waqaf.",ex:["أَحَدٌ","الْفَلَقِ"]},
+  {t:"Hukum bacaan tidak dijaga",d:"Misalnya iqlab dibaca seperti izhhar, idgham dibaca tanpa dilebur, atau ikhfa' dibaca terlalu jelas."}]},
+ {h:"Cara memperbaiki bacaan",ul:[
+  "Belajar langsung kepada guru dengan cara talaqqi (membaca di hadapan guru lalu dikoreksi).",
+  "Minta guru menyimak bacaan Anda secara rutin, dan jangan malu dikoreksi.",
+  "Rekam bacaan sendiri, lalu bandingkan dengan bacaan guru atau qari.",
+  "Mulai dari dasar: makhraj dan sifat huruf, baru hukum-hukum bacaan.",
+  "Baca pelan dan teratur setiap hari, jangan mengejar kecepatan."]},
+ {h:"Tetap semangat",p:"Rasulullah ﷺ menyebut orang yang membaca Al-Qur'an dengan terbata-bata dan merasa berat, baginya dua pahala (HR. Bukhari dan Muslim). Jadi jangan berhenti membaca karena takut salah. Teruslah membaca sambil terus belajar."}
+ ],
+ qz:[
+ {q:"Membaca الْحَمْدُ menjadi الْهَمْدُ termasuk...",o:["Lahn jali","Lahn khafi","Bukan kesalahan","Waqaf qabih"],a:0,e:"Huruf diganti sehingga lafaz rusak: lahn jali."},
+ {q:"Ghunnah yang kurang atau mad yang tidak tepat panjangnya termasuk...",o:["Lahn khafi","Lahn jali","Bukan kesalahan","Qath'"],a:0,e:"Tidak mengubah makna, hanya mengurangi kesempurnaan tajwid: lahn khafi."},
+ {q:"Membaca أَنْعَمْتَ menjadi أَنْعَمْتُ termasuk...",o:["Lahn jali","Lahn khafi","Bukan kesalahan","Mad badal"],a:0,e:"Harakat berubah sehingga makna berubah: lahn jali."},
+ {q:"Cara terbaik memperbaiki bacaan adalah...",o:["Belajar langsung kepada guru (talaqqi)","Hanya membaca buku","Hanya mendengar rekaman","Membaca lebih cepat"],a:0,e:"Koreksi langsung dari guru paling efektif, dibantu rekaman dan latihan rutin."},
+ {q:"Lahn khafi umumnya dikenali oleh...",o:["Orang yang mempelajari tajwid","Semua orang","Tidak ada yang bisa mengenali","Hanya penghafal 30 juz"],a:0,e:"Kesalahannya halus, jadi biasanya baru terasa oleh orang yang mendalami tajwid."},
+ {q:"Apa dampak perubahan huruf pada عَلِيمٌ yang terdengar seperti أَلِيمٌ?",o:["Makna berubah dari “Maha Mengetahui” menjadi “pedih”","Tidak ada dampak","Hanya panjang mad berubah","Hanya dengung berubah"],a:0,e:"ع diganti ء sehingga makna berubah total: lahn jali."}
+ ]});
+
+/* ===== BAB 9: ISTILAH DALAM AL-QUR'AN ===== */
+const SAJDAH=[["Al-A'raf","7:206"],["Ar-Ra'd","13:15"],["An-Nahl","16:50"],["Al-Isra'","17:109"],["Maryam","19:58"],["Al-Hajj","22:18"],["Al-Hajj (kedua)","22:77"],["Al-Furqan","25:60"],["An-Naml","27:26"],["As-Sajdah","32:15"],["Shad (*)","38:24"],["Fushshilat","41:38"],["An-Najm","53:62"],["Al-Insyiqaq","84:21"],["Al-'Alaq","96:19"]];
+function sajdahList(){
+  return `<ol>`+SAJDAH.map(x=>`<li>${x[0]} ${x[1]} <button class="play ay" data-src="${refURL(x[1])}" aria-label="Dengar ayat ${x[1]}">▶</button></li>`).join("")+`</ol><p class="muted small">(*) Mazhab Hanafi menghitungnya sebagai sujud tilawah. Sebagian ulama lain, termasuk mazhab Syafi'i, memandangnya sebagai sujud syukur.</p>`;
+}
+
+BAB.push({id:9,t:"Istilah dalam Al-Qur'an",ar:"مُصْطَلَحَاتُ الْقُرْآنِ",s:"Gharib, sajdah, huruf muqaththa'ah, dan istilah mushaf",
+ sec:[
+ {p:"Selain hukum tajwid umum, ada istilah-istilah khusus yang sering ditemui saat membaca Al-Qur'an. Bab ini merangkum yang paling umum, lengkap dengan contoh ayatnya. Rincian bacaan mengikuti riwayat Hafs dari Ashim."},
+ {h:"Bacaan gharib (khusus)",p:"Disebut gharib (asing) karena hanya muncul di tempat tertentu dan caranya berbeda dari kaidah umum. Ketuk tombol ayat untuk mendengarkannya.",cards:[
+  {t:"Imalah",d:"Memiringkan bunyi fathah ke arah kasrah dan alif ke arah ya, sehingga “jaa” terdengar mendekati “jee”. Dalam riwayat Hafs hanya ada satu tempat: kata مَجْرَاهَا pada Surah Hud ayat 41.",ex:["بِسْمِ اللَّهِ مَجْرَاهَا وَمُرْسَاهَا"]},
+  {t:"Isymam",d:"Mengisyaratkan harakat dhammah dengan memajukan kedua bibir tanpa mengeluarkan suara. Ada dua penggunaan: (1) saat waqaf pada huruf berharakat dhammah (lihat Bab 7), dan (2) pada kata تَأْمَنَّا di Surah Yusuf ayat 11, di mana dhammah pada nun pertama diisyaratkan sebelum nun itu dilebur.",ex:["لَا تَأْمَنَّا عَلَىٰ يُوسُفَ"]},
+  {t:"Tashil",d:"Meringankan hamzah kedua pada dua hamzah berurutan, sehingga bunyinya berada di antara hamzah dan alif. Dalam riwayat Hafs, contohnya pada Surah Fushshilat ayat 44.",ex:["أَأَعْجَمِيٌّ وَعَرَبِيٌّ"]},
+  {t:"Saktah",d:"Berhenti sejenak sekitar 2 harakat tanpa mengambil nafas. Empat tempatnya sudah dibahas di Bab 7. Dua di antaranya sebagai contoh:",ex:["مَنْ رَاقٍ","بَلْ رَانَ"]},
+  {t:"Naql",d:"Memindahkan harakat hamzah ke huruf sebelumnya. Dalam buku tajwid di Indonesia, contohnya pada Surah Al-Hujurat ayat 11: hamzah washal pada الِاسْمُ dihilangkan dan harakatnya pindah ke lam, sehingga terdengar seperti “bi'sa lismu”.",ex:["بِئْسَ الِاسْمُ الْفُسُوقُ"]}]},
+ {h:"Hamzah washal dan hamzah qatha'",cards:[
+  {t:"Hamzah Washal",d:"Hamzah di awal kata yang hanya dibaca ketika memulai bacaan, dan hilang ketika disambung dengan kata sebelumnya. Contoh: hamzah pada ٱهْدِنَا dan pada alif lam (ال).",ex:["اهْدِنَا الصِّرَاطَ","الْحَمْدُ لِلَّهِ"]},
+  {t:"Hamzah Qatha'",d:"Hamzah yang selalu dibaca, baik di awal bacaan maupun saat disambung.",ex:["أَنْعَمْتَ","أَحَدٌ"]}]},
+ {h:"Huruf muqaththa'ah",p:"Huruf-huruf terpisah di awal 29 surah. Dibaca dengan menyebut nama hurufnya, bukan digabung menjadi kata. Misalnya الم dibaca “alif lam mim”. Huruf yang namanya tiga huruf (seperti lam dan mim) umumnya dibaca panjang, sedangkan yang namanya dua huruf (seperti ha dan ya) dibaca 2 harakat. Dengarkan contohnya dan ikuti guru Anda.",cards:[
+  {t:"Contoh huruf muqaththa'ah",d:"Dari Surah Al-Baqarah, Yasin, Ghafir, dan Maryam.",ex:["الم","يس","حم","كهيعص"]}]},
+ {h:"Sajdah (sujud tilawah)",ul:[
+  "Pengertian: sujud yang dilakukan ketika membaca atau mendengar ayat sajdah.",
+  "Hukum: menurut jumhur (mayoritas) ulama sunnah muakkadah. Mazhab Hanafi berpendapat wajib.",
+  "Tanda: di mushaf, ayat sajdah diberi tanda khusus (۩) atau tulisan “as-sajdah” di pinggir halaman.",
+  "Jumlah: daftar yang paling umum memuat 15 tempat. Ada perbedaan ulama: mazhab Hanafi tidak menghitung Al-Hajj ayat 77 (jadi 14 tempat), sedangkan Shad ayat 24 dipandang sebagian ulama sebagai sujud syukur.",
+  "Bacaan dalam sujud: tasbih atau doa yang diajarkan Nabi ﷺ, misalnya: سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ.",
+  "Syarat dan cara rinci (suci, takbir, salam) berbeda antar mazhab. Ikuti tuntunan guru Anda."],html:sajdahList},
+ {h:"Isti'adzah dan basmalah",cards:[
+  {t:"Isti'adzah",d:"Memohon perlindungan Allah dari setan sebelum membaca Al-Qur'an. Lafaznya: أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ. Dasarnya adalah Surah An-Nahl ayat 98.",ex:["فَإِذَا قَرَأْتَ الْقُرْآنَ فَاسْتَعِذْ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ"]},
+  {t:"Basmalah",d:"Bacaan بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. Ia mengawali setiap surah kecuali At-Taubah, dan dihitung sebagai ayat pertama Al-Fatihah dalam hitungan yang umum.",ex:["بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"]}]},
+ {h:"Istilah dalam mushaf",ul:[
+  "Surah: bagian-bagian Al-Qur'an, berjumlah 114.",
+  "Ayat: satuan kalimat dalam surah, berjumlah 6.236 menurut hitungan yang umum.",
+  "Juz: 30 bagian dengan panjang kira-kira sama. Hizb: setengah juz (60 hizb). Rub': seperempat hizb.",
+  "Makkiyyah dan Madaniyyah: surah yang turun sebelum hijrah dan sesudah hijrah (menurut pendapat yang masyhur).",
+  "Tanda akhir ayat (۝) menutup setiap ayat. Huruf ع di pinggir halaman menandai satu bagian ruku'. Tanda sajdah (۩) dan tanda waqaf (Bab 7) juga ada di mushaf."]}
+ ],
+ qz:[
+ {q:"Dalam riwayat Hafs, imalah hanya ada pada kata...",o:["مَجْرَاهَا (Hud ayat 41)","تَأْمَنَّا (Yusuf ayat 11)","أَأَعْجَمِيٌّ (Fushshilat ayat 44)","مَنْ رَاقٍ (Al-Qiyamah ayat 27)"],a:0,e:"Hanya مَجْرَاهَا di Surah Hud ayat 41."},
+ {q:"Pada Surah Yusuf ayat 11, kata تَأْمَنَّا dibaca dengan...",o:["Isymam","Imalah","Tashil","Naql"],a:0,e:"Dhammah pada nun pertama diisyaratkan dengan memajukan bibir tanpa suara: isymam."},
+ {q:"Berhenti sejenak tanpa mengambil nafas, misalnya pada مَنْ رَاقٍ, disebut...",o:["Saktah","Qath'","Waqaf tam","Ibtida'"],a:0,e:"Saktah: berhenti sekitar 2 harakat tanpa nafas."},
+ {q:"Hukum sujud tilawah menurut jumhur ulama adalah...",o:["Sunnah muakkadah","Wajib","Haram","Mubah"],a:0,e:"Jumhur ulama menyatakan sunnah muakkadah. Mazhab Hanafi menyatakan wajib."},
+ {q:"الم di awal Surah Al-Baqarah termasuk...",o:["Huruf muqaththa'ah","Hamzah washal","Ayat sajdah","Naql"],a:0,e:"Huruf muqaththa'ah, dibaca dengan menyebut nama hurufnya."},
+ {q:"Hamzah yang hilang saat disambung dengan kata sebelumnya disebut...",o:["Hamzah washal","Hamzah qatha'","Imalah","Saktah"],a:0,e:"Hamzah washal hanya dibaca saat memulai bacaan."}
+ ]});
+
+/* ===== BAB 10: MOTIVASI MEMPELAJARI TAJWID ===== */
+BAB.unshift({id:0,t:"Pendahuluan: Motivasi Mempelajari Tajwid",ar:"فَضْلُ تَعَلُّمِ التَّجْوِيدِ",s:"Nazham Ibnul Jazari dan hadits tentang Al-Qur'an",
+ sec:[
+ {p:"Belajar tajwid bukan sekadar menghafal istilah. Ia adalah cara kita memuliakan firman Allah dengan membacanya sebaik-baiknya. Bab ini berisi dorongan semangat dari Al-Qur'an, nazham Imam Ibnul Jazari, dan hadits-hadits Nabi ﷺ. Tujuannya bukan menakut-nakuti, tetapi menumbuhkan semangat untuk terus belajar."},
+ {h:"Perintah membaca dengan tartil",cards:[
+  {t:"Surah Al-Muzzammil ayat 4",d:"Allah memerintahkan agar Al-Qur'an dibaca dengan tartil, yaitu perlahan, jelas, dan tertata, tidak tergesa-gesa, serta disertai perhatian pada maknanya.",ex:["وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا"]}]},
+ {h:"Nazham Ibnul Jazari: pentingnya tajwid",p:"Imam Muhammad bin Muhammad Ibnul Jazari (w. 833 H) menulis Al-Muqaddimah (dikenal juga sebagai Al-Jazariyyah), nazham pendek tentang apa yang wajib diketahui pembaca Al-Qur'an. Tujuh bait berikut menjelaskan kedudukan dan hakikat tajwid.",cards:[
+  {t:"Bait 1: Kewajiban tajwid",ar:"وَالْأَخْذُ بِالتَّجْوِيدِ حَتْمٌ لَازِمُ<br>مَنْ لَمْ يُصَحِّحِ الْقُرْآنَ آثِمُ",d:`<span class="muted small">Wal-akhdzu bit-tajwiidi hatmun laazimu, man lam yushahhihil-qur'aana aatsimu.</span><br>Mengamalkan tajwid itu wajib dan pasti. Siapa yang tidak membenarkan bacaan Al-Qur'an, ia berdosa.`},
+  {t:"Bait 2: Al-Qur'an turun dengan tajwid",ar:"لِأَنَّهُ بِهِ الْإِلَهُ أَنْزَلَا<br>وَهَكَذَا مِنْهُ إِلَيْنَا وَصَلَا",d:`<span class="muted small">Li'annahu bihil-ilaahu anzalaa, wa hakadzaa minhu ilainaa washalaa.</span><br>Sebab dengan tajwidlah Allah menurunkan Al-Qur'an, dan begitulah ia sampai kepada kita dari-Nya.`},
+  {t:"Bait 3: Perhiasan bacaan",ar:"وَهُوَ أَيْضًا حِلْيَةُ التِّلَاوَةِ<br>وَزِينَةُ الْأَدَاءِ وَالْقِرَاءَةِ",d:`<span class="muted small">Wa huwa aydhan hilyatut-tilaawati, wa ziinatul-adaa'i wal-qiraa'ati.</span><br>Tajwid juga perhiasan tilawah, dan hiasan bagi pelafalan dan bacaan.`},
+  {t:"Bait 4: Pengertian tajwid",ar:"وَهُوَ إِعْطَاءُ الْحُرُوفِ حَقَّهَا<br>مِنْ كُلِّ صِفَةٍ وَمُسْتَحَقَّهَا",d:`<span class="muted small">Wa huwa i'thaa'ul-huruufi haqqahaa, min kulli shifatin wa mustahaqqahaa.</span><br>Tajwid ialah memberikan hak huruf-huruf, dari setiap sifat yang melekat padanya dan hak yang semestinya ia dapatkan (mustahaq).`},  
+  {t:"Bait 5: Mengembalikan huruf pada asalnya",ar:"وَرَدُّ كُلِّ وَاحِدٍ لِأَصْلِهِ<br>وَاللَّفْظُ فِي نَظِيرِهِ كَمِثْلِهِ",d:`<span class="muted small">Wa raddu kulli waahidin li ashlihi, wal-lafzhu fii nazhiirihi kamitslihi.</span><br>Dan mengembalikan setiap huruf kepada asalnya (makhrajnya), serta pelafalan pada huruf yang serupa hendaknya sama.`},
+  {t:"Bait 6: Tanpa memaksakan diri",ar:"مُكَمِّلًا مِنْ غَيْرِ مَا تَكَلُّفِ<br>بِاللُّطْفِ فِي النُّطْقِ بِلَا تَعَسُّفِ",d:`<span class="muted small">Mukammilan min ghairi maa takalluf, bil-luthfi fin-nuthqi bilaa ta'assuf.</span><br>Dilakukan dengan sempurna tanpa memaksakan diri, dengan lembut dalam pengucapan dan tanpa berlebih-lebihan.`},
+  {t:"Bait 7: Hanya butuh latihan",ar:"وَلَيْسَ بَيْنَهُ وَبَيْنَ تَرْكِهِ<br>إِلَّا رِيَاضَةُ امْرِئٍ بِفَكِّهِ",d:`<span class="muted small">Wa laisa bainahu wa baina tarkihi, illaa riyaadhatu imri'in bifakkihi.</span><br>Tidak ada pembeda antara bertajwid dan meninggalkannya, kecuali latihan seseorang dengan mulutnya. Artinya, tajwid dikuasai lewat latihan, dan siapa pun bisa mulai.`}]},
+ {h:"Catatan tentang bait pertama",p:"Sebagian kitab mencatat lafaz يُجَوِّدِ sebagai ganti يُصَحِّحِ pada bait ini, dan maknanya sejalan. Para ulama menjelaskan bahwa kewajiban ini paling tegas pada menjaga bacaan dari kesalahan yang merusak lafaz atau makna (lahn jali, lihat Bab 8), dan berlaku sesuai kemampuan. Putra beliau, Ahmad bin Muhammad Ibnul Jazari, menegaskan bahwa kewajiban itu bagi yang mampu. Jadi jangan berkecil hati: teruslah belajar dan perbaiki bacaan bersama guru."},
+ {h:"Hadits tentang keutamaan Al-Qur'an",cards:[
+  {t:"Hadits Aisyah r.a. (HR. Bukhari dan Muslim)",ar:"الَّذِي يَقْرَأُ الْقُرْآنَ وَهُوَ مَاهِرٌ بِهِ مَعَ السَّفَرَةِ الْكِرَامِ الْبَرَرَةِ،<br>وَالَّذِي يَقْرَأُ الْقُرْآنَ وَ هُوَ يَتَتَعْتَعُ فِيهِ وَهُوَ عَلَيْهِ شَاقٌّ لَهُ أَجْرَانِ",d:`<span class="muted small">Alladzii yaqra'ul-qur'aana wa huwa maahirun bihi ma'as-safaratil-kiraamil-bararah, wal-ladzii yaqra'ul-qur'aana wa yatata'ta'u fiihi wa huwa 'alaihi syaaqqun lahu ajraan.</span><br>Orang yang membaca Al-Qur'an dan ia mahir dengannya, ia bersama para malaikat pencatat (as-safarah) yang mulia lagi berbakti. Dan orang yang membaca Al-Qur'an dengan terbata-bata dan merasa berat, baginya dua pahala.<br><span class="muted small">Menurut penjelasan sebagian ulama, dua pahala itu adalah pahala membaca dan pahala atas kesulitannya. Namun kedudukan tertinggi bagi yang mahir, maka teruslah berlatih sampai mahir. Lafaz hadits ini sedikit berbeda antar riwayat; yang ditulis di sini mengikuti riwayat Muslim.</span>`},
+  {t:"Hadits Ibnu Abbas r.a. (HR. At-Tirmidzi)",ar:"إِنَّ الَّذِي لَيْسَ فِي جَوْفِهِ شَيْءٌ مِنَ الْقُرْآنِ كَالْبَيْتِ الْخَرِبِ",d:`<span class="muted small">Innal-ladzii laisa fii jaufihii syai'um minal-qur'aani kal-baitil-kharib.</span><br>Sesungguhnya orang yang di dalam dirinya tidak ada sedikit pun dari Al-Qur'an, seperti rumah yang rusak.<br><span class="muted small">At-Tirmidzi menilainya hasan sahih. Hadits ini mendorong kita mengisi diri dengan Al-Qur'an melalui membaca, mempelajari, dan menghafalnya.</span>`},
+  {t:"Tambahan: Hadits Utsman r.a. (HR. Bukhari)",ar:"خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",d:`<span class="muted small">Khairukum man ta'allamal-qur'aana wa 'allamah.</span><br>Sebaik-baik kalian adalah orang yang mempelajari Al-Qur'an dan mengajarkannya.`}]},
+ {h:"Mengapa tajwid penting",ul:[
+  "Menjaga lafaz dan makna: perubahan kecil pada huruf atau harakat bisa mengubah arti (lihat Bab 8).",
+  "Menjaga bacaan sebagaimana diturunkan dan diajarkan Rasulullah ﷺ, yang sampai kepada kita melalui guru ke guru.",
+  "Memuliakan firman Allah dengan membacanya sebaik mungkin.",
+  "Membantu khusyuk dan memahami, karena membaca dengan tartil tidak tergesa-gesa.",
+  "Pahala terbuka bagi semua tingkat, dari pemula yang masih terbata-bata sampai yang sudah mahir."]},
+ {h:"Langkah memulai",ul:[
+  "Luruskan niat: belajar karena Allah, bukan untuk dipuji.",
+  "Cari guru dan belajar secara langsung (talaqqi). Aplikasi ini hanya pendamping.",
+  "Mulai dari makhraj dan sifat huruf (Bab 1 dan 2), lalu hukum bacaan (Bab 3 sampai 7).",
+  "Berlatih rutin, walau hanya 10 menit setiap hari.",
+  "Rekam bacaan Anda, dengarkan, lalu bandingkan dengan bacaan guru atau qari.",
+  "Sabar: terbata-bata di awal itu wajar dan tetap berpahala."]}
+ ],
+ qz:[
+ {q:"Menurut nazham Ibnul Jazari, tajwid adalah...",o:["Memberikan huruf-huruf haknya, berupa sifat dan mustahaqnya","Membaca secepat mungkin","Menghafal tanpa memahami","Membaca dengan nada tinggi"],a:0,e:"Bait 4: tajwid adalah memberikan hak huruf-huruf, berupa sifat yang melekat padanya dan mustahaqnya."},
+ {q:"Siapa penulis nazham Al-Muqaddimah (Al-Jazariyyah)?",o:["Imam Ibnul Jazari","Imam Bukhari","Ibnu Abbas","Imam Syafi'i"],a:0,e:"Penulisnya Imam Muhammad bin Muhammad Ibnul Jazari (w. 833 H)."},
+ {q:"Menurut hadits Aisyah r.a., orang yang mahir membaca Al-Qur'an bersama...",o:["Para malaikat pencatat yang mulia lagi berbakti","Para nabi saja","Orang-orang yang menghafal 30 juz","Siapa pun tanpa syarat"],a:0,e:"Orang yang mahir bersama as-safaratil kiramil bararah (para malaikat pencatat yang mulia lagi berbakti)."},
+ {q:"Orang yang membaca Al-Qur'an dengan terbata-bata dan merasa berat mendapat...",o:["Dua pahala","Tidak mendapat pahala","Dosa","Satu pahala saja"],a:0,e:"Baginya dua pahala (HR. Bukhari dan Muslim)."},
+ {q:"Menurut hadits Ibnu Abbas r.a., orang yang tidak ada sedikit pun Al-Qur'an dalam dirinya seperti...",o:["Rumah yang rusak","Pohon yang gersang","Lautan yang kering","Gunung yang tinggi"],a:0,e:"Seperti rumah yang rusak (HR. At-Tirmidzi)."},
+ {q:"Perintah membaca Al-Qur'an dengan tartil terdapat dalam...",o:["Surah Al-Muzzammil ayat 4","Surah Al-Fatihah ayat 1","Surah Al-Ikhlas ayat 1","Surah An-Nas ayat 1"],a:0,e:"وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا (Al-Muzzammil ayat 4)."}
+ ]});
+/* ===== TAMPILAN ===== */
+const app=document.getElementById("app");
+const LEG={izhhar:"Izhhar",idgham:"Idgham",iqlab:"Iqlab",ikhfa:"Ikhfa'"};
+const CTX={b:0,c:0};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function best(id){try{return localStorage.getItem("tajwid_best"+id)}catch(e){return null}}
+function saveBest(id,s){try{if(s>parseInt(best(id)||"0",10))localStorage.setItem("tajwid_best"+id,String(s))}catch(e){}}
+
+function card(c){
+  CTX.c++;
+  const n=CTX.c;
+  return '<section class="hukum '+(c.k||"")+'"><div class="name">'+c.t+'</div>'+
+    (c.ar?(c.lab?'<div class="muted small" style="margin-top:6px">'+c.lab+'</div>':'')+'<div class="ar letters">'+c.ar+'</div>':'')+
+    (c.d?'<p style="margin:6px 0">'+c.d+'</p>':'')+
+    (c.ex?'<div class="muted small">Contoh:</div><div class="ar ex">'+c.ex.map((e,i)=>{
+      const key=CTX.b+'-'+n+'-'+(i+1),r=REF[key];
+      return '<span>'+e+
+        (r?'<button class="play ay" data-src="'+refURL(r)+'" aria-label="Dengar ayat '+r+'">▶ '+r+'</button>':'')+
+        '<button class="play" data-src="audio/b'+key+'.mp3" aria-label="Putar rekaman sendiri">▶</button></span>';
+    }).join("")+'</div>':'')+
+    '</section>';
+}
+function sections(list){
+  return list.map(s=>
+    (s.h?'<h2>'+s.h+'</h2>':'')+
+    (s.p?'<p>'+s.p+'</p>':'')+
+    (s.ul?'<ul>'+s.ul.map(x=>'<li>'+x+'</li>').join("")+'</ul>':'')+
+    (s.html?s.html():'')+
+    (s.cards||[]).map(card).join("")
+  ).join("");
+}
+
+function home(){
+  let h='<div class="hero"><p class="ar">تَجْوِيدٌ</p><h1>Belajar Tajwid</h1><p class="muted">Sepuluh Bab, dari tempat keluar huruf sampai cara berhenti saat membaca Al-Qur\'an.</p></div><ol class="list">';
+  BAB.forEach(b=>{
+    const bs=best(b.id);
+    h+='<li><a href="#/bab/'+b.id+'"><span class="n">'+(b.id||"★")+'</span><span class="t"><b>'+b.t+'</b><span>'+b.s+'</span></span><span class="tag on">'+(bs?'Skor '+bs+'/'+b.qz.length:'Mulai')+'</span></a></li>';
+  });
+  app.innerHTML=h+'</ol><p class="small" style="margin-top:20px"><a href="#/rangkuman">Rangkuman cetak</a> &nbsp;·&nbsp; <a href="#/ujian">Ujian akhir</a> &nbsp;·&nbsp; <a href="#/ayat">Pemutar ayat</a> &nbsp;·&nbsp; <a href="#/audio">Daftar file rekaman sendiri</a></p><p class="muted small">Isi materi sebaiknya dicocokkan dengan guru tajwid atau mushaf. Panjang harakat mengikuti riwayat Hafs dari Ashim.</p>';
+}
+
+function chapter(b){
+  CTX.b=b.id;CTX.c=0;
+  let h='<header class="top"><a class="back" href="#/">Daftar bab</a></header><h1>'+(b.id?'Bab '+b.id+': ':'')+b.t+'</h1><p class="ar" style="font-size:28px;margin:0;color:var(--brand)">'+b.ar+'</p>';
+  if(b.leg)h+='<div class="legend">'+b.leg.map(k=>'<span><i style="background:var(--'+k+')"></i>'+LEG[k]+'</span>').join("")+'</div>';
+  h+=sections(b.sec)+'<h2>Latihan</h2><div id="quiz"></div>';
+  const nb=BAB[BAB.indexOf(b)+1];if(nb)h+='<a class="btn" href="#/bab/'+nb.id+'">Bab berikutnya</a>';
+  app.innerHTML=h;
+  startQuiz(b);
+}
+
+function audioPage(){
+  let h='<header class="top"><a class="back" href="#/">Beranda</a></header><h1>Daftar file rekaman sendiri</h1>'+
+   '<p>Fitur ini opsional. Buat folder bernama <code>audio</code> di tempat yang sama dengan file HTML ini, lalu isi dengan file MP3 sesuai daftar di bawah, misalnya rekaman guru Anda. File yang belum ada tidak masalah: aplikasi hanya menampilkan pesan kecil.</p>'+
+   '<h2>Huruf hijaiyah</h2><p>Folder <code>audio/huruf/</code>, urut seperti papan huruf di Bab 1.</p><ul>'+
+   HURUF.map((x,i)=>'<li><code>audio/huruf/'+pad(i+1)+'.mp3</code> <span class="ar" style="font-size:24px">'+x[0]+'</span></li>').join("")+'</ul>';
+  BAB.forEach(b=>{
+    let n=0,rows='';
+    b.sec.forEach(s=>(s.cards||[]).forEach(c=>{n++;(c.ex||[]).forEach((e,i)=>{rows+='<li><code>audio/b'+b.id+'-'+n+'-'+(i+1)+'.mp3</code> <span class="ar" style="font-size:24px">'+e.replace(/<[^>]+>/g,"")+'</span></li>'})}));
+    h+='<h2>Bab '+b.id+': '+b.t+'</h2>'+(rows?'<ul>'+rows+'</ul>':'<p class="muted">Tidak ada contoh di bab ini.</p>');
+  });
+  app.innerHTML=h;
+}
+
+function ayatPage(){
+  app.innerHTML='<header class="top"><a class="back" href="#/">Beranda</a></header><h1>Pemutar ayat</h1>'+
+   '<p>Masukkan nomor surah dan nomor ayat, lalu tekan Putar. Suara: Syekh Mishary Alafasy. Perlu koneksi internet.</p>'+
+   '<div class="box"><label class="small muted">Surah (1-114)<br><input id="sn" class="inp" type="number" min="1" max="114" value="1"></label>'+
+   '<label class="small muted">Ayat<br><input id="an" class="inp" type="number" min="1" value="1"></label><br>'+
+   '<button class="btn" id="goay" style="margin-top:4px">Putar</button><p class="muted small" id="ayinfo" style="margin:10px 0 0" aria-live="polite"></p></div>'+
+   '<p class="muted small" style="margin-top:16px">Sumber audio: Al Quran Cloud (Islamic Network), untuk penggunaan pribadi dan pendidikan nonkomersial. Hak cipta rekaman tetap pada qari dan pemegang haknya.</p>';
+  document.getElementById("goay").onclick=()=>{
+    const s=parseInt(document.getElementById("sn").value,10),a=parseInt(document.getElementById("an").value,10),info=document.getElementById("ayinfo");
+    if(!(s>=1&&s<=114)){info.textContent="Nomor surah harus 1 sampai 114.";return}
+    if(!(a>=1&&a<=AYAH[s-1])){info.textContent="Surah "+s+" hanya punya "+AYAH[s-1]+" ayat.";return}
+    info.textContent="Memutar surah "+s+" ayat "+a+"...";
+    play(ayahURL(s,a));
+  };
+}
+
+/* ===== AUDIO DAN DIAGRAM (klik) ===== */
+let AU=null,TT;
+function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(TT);TT=setTimeout(()=>el.classList.remove("show"),3500)}
+function play(src){
+  if(AU){try{AU.pause()}catch(e){}}
+  AU=new Audio(src);
+  AU.onerror=()=>toast(src.indexOf("http")===0?"Audio ayat gagal dimuat. Periksa koneksi internet.":"Rekaman sendiri belum ada (opsional): "+src);
+  const p=AU.play();if(p&&p.catch)p.catch(()=>{});
+}
+document.addEventListener("click",e=>{
+  const s=e.target.closest("[data-src]");
+  if(s){play(s.getAttribute("data-src"));return}
+  const d=e.target.closest("[data-d]");
+  if(d){
+    const k=d.getAttribute("data-d");
+    document.querySelectorAll(".dbtn").forEach(b=>b.classList.toggle("on",b.getAttribute("data-d")===k));
+    document.querySelectorAll(".mk").forEach(m=>m.classList.toggle("dim",k!=="all"&&m.getAttribute("data-k")!==k));
+    const i=document.getElementById("dinfo");if(i)i.textContent=INFO[k];
+  }
+});
+
+/* ===== LATIHAN ===== */
+let Q;
+function startQuiz(b){Q={b:b,list:shuffle(b.qz),i:0,score:0,done:false};drawQ()}
+function drawQ(){
+  const box=document.getElementById("quiz");if(!box)return;
+  const total=Q.list.length,bb=best(Q.b.id),bs=bb?" Skor terbaik: "+bb+"/"+total+".":"";
+  if(Q.i>=total){
+    saveBest(Q.b.id,Q.score);
+    box.innerHTML='<div class="box"><h3>Skor kamu: '+Q.score+' dari '+total+'</h3><p class="muted">'+(Q.score===total?"Semua benar. Lanjutkan ke bab berikutnya.":"Baca lagi materi di atas, lalu coba lagi.")+'</p><button class="btn" id="again">Ulangi latihan</button></div>';
+    document.getElementById("again").onclick=()=>startQuiz(Q.b);return;
+  }
+  const q=Q.list[Q.i];
+  let h='<div class="box"><div class="bar"><div style="width:'+(Q.i/total*100)+'%"></div></div><p class="muted" style="margin:0">Soal '+(Q.i+1)+' dari '+total+'.'+bs+'</p><p style="margin:6px 0 0">'+q.q+'</p>'+(q.ar?'<div class="ar q-word">'+q.ar+'</div>':'<div style="height:10px"></div>')+'<div class="opts">';
+  q.o.forEach((o,i)=>{h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='</div><div class="fb" id="fb" aria-live="polite"></div></div>';
+  box.innerHTML=h;
+  box.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(Q.done)return;Q.done=true;
+      const pick=parseInt(btn.getAttribute("data-i"),10),ok=pick===q.a;
+      if(ok)Q.score++;
+      box.querySelectorAll(".opt").forEach((o,i)=>{if(i===q.a)o.classList.add("ok");o.disabled=true});
+      if(!ok)btn.classList.add("bad");
+      const fb=document.getElementById("fb");
+      fb.innerHTML='<b>'+(ok?"Benar.":"Belum tepat.")+'</b> '+q.e+'<br><button class="btn" id="next">'+(Q.i+1<total?"Soal berikutnya":"Lihat skor")+'</button>';
+      const nx=document.getElementById("next");
+      nx.onclick=()=>{Q.i++;Q.done=false;drawQ()};
+      nx.focus();
+    };
+  });
+}
+
+/* ===== UJIAN AKHIR ===== */
+let U=null;
+const UJIAN_JUMLAH=20;
+
+function ujianPilih(){
+  const pool=[];
+  BAB.forEach(b=>b.qz.forEach(q=>pool.push({b:b,q:q})));
+  const acak=shuffle(pool),cap=Math.ceil(UJIAN_JUMLAH/BAB.length),cnt={},pilih=[];
+  acak.forEach(x=>{
+    if(pilih.length<UJIAN_JUMLAH&&(cnt[x.b.id]||0)<cap){cnt[x.b.id]=(cnt[x.b.id]||0)+1;pilih.push(x)}
+  });
+  acak.forEach(x=>{
+    if(pilih.length<UJIAN_JUMLAH&&pilih.indexOf(x)<0)pilih.push(x);
+  });
+  return shuffle(pilih);
+}
+
+function ujianPage(){
+  U=null;
+  let bs=null;
+  try{bs=localStorage.getItem("tajwid_ujian")}catch(e){}
+  app.innerHTML='<header class="top"><a class="back" href="#/">Beranda</a></header><h1>Ujian akhir</h1>'+
+   '<p>'+UJIAN_JUMLAH+' soal acak dari semua bab. Jawab satu per satu. Hasil dan pembahasan soal yang salah muncul di akhir. Setiap kali mulai, soalnya berbeda.</p>'+
+   (bs?'<p class="muted">Skor terbaik: '+bs+' dari '+UJIAN_JUMLAH+'.</p>':'')+
+   '<button class="btn" id="mulaiU">Mulai ujian</button>';
+  document.getElementById("mulaiU").onclick=startUjian;
+}
+
+function startUjian(){
+  U={list:ujianPilih(),i:0,score:0,done:false,salah:[]};
+  drawU();
+}
+
+function drawU(){
+  window.scrollTo(0,0);
+  const total=U.list.length;
+  if(U.i>=total){ujianHasil();return}
+  const x=U.list[U.i],q=x.q;
+  let h='<header class="top"><a class="back" href="#/">Keluar</a></header><h1>Ujian akhir</h1><div class="box"><div class="bar"><div style="width:'+(U.i/total*100)+'%"></div></div><p class="muted" style="margin:0">Soal '+(U.i+1)+' dari '+total+'</p><p style="margin:6px 0 0">'+q.q+'</p>'+(q.ar?'<div class="ar q-word">'+q.ar+'</div>':'<div style="height:10px"></div>')+'<div class="opts">';
+  q.o.forEach((o,i)=>{h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='</div><div class="fb" id="fb" aria-live="polite"></div></div>';
+  app.innerHTML=h;
+  app.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(U.done)return;U.done=true;
+      const pick=parseInt(btn.getAttribute("data-i"),10);
+      if(pick===q.a)U.score++;else U.salah.push({x:x,pick:pick});
+      app.querySelectorAll(".opt").forEach(o=>{o.disabled=true});
+      btn.style.borderColor="var(--brand)";
+      const fb=document.getElementById("fb");
+      fb.innerHTML='Jawaban tersimpan.<br><button class="btn" id="nextU">'+(U.i+1<total?"Soal berikutnya":"Lihat hasil")+'</button>';
+      const nx=document.getElementById("nextU");
+      nx.onclick=()=>{U.i++;U.done=false;drawU()};
+      nx.focus();
+    };
+  });
+}
+
+function ujianHasil(){
+  window.scrollTo(0,0);
+  const total=U.list.length,s=U.score,pct=Math.round(s/total*100);
+  try{
+    const lama=parseInt(localStorage.getItem("tajwid_ujian")||"0",10);
+    if(s>lama)localStorage.setItem("tajwid_ujian",String(s));
+  }catch(e){}
+  const pred=pct>=90?"Sangat baik":pct>=75?"Baik":pct>=60?"Cukup":"Perlu belajar lagi";
+  let h='<header class="top"><a class="back" href="#/">Beranda</a></header><h1>Hasil ujian</h1><div class="box"><h3>Skor: '+s+' dari '+total+' ('+pct+'%)</h3><p style="margin:0">'+pred+'.</p></div>';
+  if(U.salah.length){
+    h+='<h2>Pembahasan soal yang salah</h2>';
+    U.salah.forEach(w=>{
+      const q=w.x.q;
+      h+='<section class="hukum"><div class="small muted">Bab '+w.x.b.id+': '+w.x.b.t+'</div><p style="margin:6px 0">'+q.q+'</p>'+
+         (q.ar?'<div class="ar" style="font-size:30px">'+q.ar+'</div>':'')+
+         '<p style="margin:6px 0">Jawaban Anda: '+q.o[w.pick]+'<br>Jawaban benar: <b>'+q.o[q.a]+'</b></p>'+
+         '<p class="muted small" style="margin:0">'+q.e+' <a href="#/bab/'+w.x.b.id+'">Pelajari lagi</a></p></section>';
+    });
+  }else{
+    h+='<p style="margin-top:16px">Semua jawaban benar. Barakallahu fiik!</p>';
+  }
+  h+='<button class="btn" id="ulangU">Ulangi dengan soal baru</button>';
+  app.innerHTML=h;
+  document.getElementById("ulangU").onclick=startUjian;
+}
+
+/* ===== RANGKUMAN CETAK ===== */
+const RK=[
+ {h:"1. Makhrajul huruf (17 makhraj)",head:["Daerah","Jumlah","Huruf"],rows:[
+  ["Al-Jauf (rongga mulut, huruf mad)","1","ا و ي"],
+  ["Al-Halq (tenggorokan)","3","ء ه | ع ح | غ خ"],
+  ["Al-Lisan (lidah)","10","ق | ك | ج ش ي | ض | ل | ن | ر | ط د ت | ص س ز | ظ ذ ث"],
+  ["Asy-Syafatain (dua bibir)","2","ف | ب م و"],
+  ["Al-Khaisyum (rongga hidung, tempat ghunnah)","1","نّ مّ"]
+ ]},
+ {h:"2. Sifat huruf",head:["Sifat","Huruf"],rows:[
+  ["Hams (lawan: Jahr)","ف ح ث ه ش خ ص س ك ت"],
+  ["Syiddah (lawan: Rakhawah)","ء ج د ك ق ط ب ت"],
+  ["Tawassuth (antara syiddah dan rakhawah)","ل ن ع م ر"],
+  ["Isti'la (lawan: Istifal)","خ ص ض غ ط ق ظ"],
+  ["Ithbaq (lawan: Infitah)","ص ض ط ظ"],
+  ["Idzlaq (lawan: Ishmat)","ف ر م ن ل ب"],
+  ["Shafir","ص ز س"],
+  ["Qalqalah","ق ط ب ج د"],
+  ["Lin (sukun setelah fathah)","و ي"],
+  ["Inhiraf","ل ر"],
+  ["Takrir","ر"],
+  ["Tafasysyi","ش"],
+  ["Istithalah","ض"]
+ ]},
+ {h:"3. Nun mati dan tanwin",head:["Hukum","Huruf","Cara baca"],rows:[
+  ["Izhhar halqi","ء ه ع ح غ خ","Jelas, tanpa dengung"],
+  ["Idgham bighunnah","ي ن م و","Dilebur, dengan dengung"],
+  ["Idgham bilaghunnah","ل ر","Dilebur, tanpa dengung"],
+  ["Iqlab","ب","Diubah menjadi mim, didengungkan"],
+  ["Ikhfa' haqiqi","ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك","Samar, dengan dengung"]
+ ]},
+ {h:"4. Mim mati",head:["Hukum","Huruf pemicu","Cara baca"],rows:[
+  ["Ikhfa' syafawi","ب","Samar, dengan dengung"],
+  ["Idgham mimi","م","Dilebur, didengungkan"],
+  ["Izhhar syafawi","Semua huruf selain م dan ب","Jelas, tanpa dengung"]
+ ]},
+ {h:"5. Macam-macam idgham",head:["Jenis","Keterangan"],rows:[
+  ["Mutamatsilain","Dua huruf sama makhraj dan sifat (contoh: ب bertemu ب)"],
+  ["Mutajanisain","Sama makhraj, beda sifat (contoh: ت dengan ط)"],
+  ["Mutaqaribain","Makhraj atau sifat berdekatan (contoh: ل dengan ر)"]
+ ]},
+ {h:"Alif lam: syamsiyyah dan qamariyyah",head:["Jenis","Huruf (masing-masing 14)","Cara baca lam"],rows:[
+  ["Syamsiyyah","ت ث د ذ ر ز س ش ص ض ط ظ ل ن","Dilebur"],
+  ["Qamariyyah","ا ب ج ح خ ع غ ف ق ك م و ه ي","Jelas"]
+ ]},
+ {h:"6. Macam-macam mad",head:["Mad","Sebab","Panjang"],rows:[
+  ["Thabi'i","Alif, wawu sukun, ya sukun sebagai huruf mad, tanpa hamzah atau sukun sesudahnya","2 harakat"],
+  ["Badal","Hamzah mendahului huruf mad dalam satu kata","2 harakat"],
+  ["'Iwadh","Tanwin fathah di akhir kata saat waqaf","2 harakat"],
+  ["Shilah qashirah","Ha dhamir diapit huruf hidup, tidak sebelum hamzah","2 harakat"],
+  ["Shilah thawilah","Ha dhamir diapit huruf hidup, sebelum hamzah","4 atau 5 harakat"],
+  ["Wajib muttashil","Mad bertemu hamzah dalam satu kata","4 atau 5 harakat"],
+  ["Jaiz munfashil","Mad di akhir kata, hamzah di awal kata berikutnya","2, 4, atau 5 harakat"],
+  ["'Aridh lissukun","Mad diikuti huruf akhir yang diwaqafkan","2, 4, atau 6 harakat"],
+  ["Lin","Wawu atau ya sukun setelah fathah, lalu waqaf","2, 4, atau 6 harakat"],
+  ["Lazim","Mad diikuti sukun asli atau tasydid dalam satu kata","6 harakat"]
+ ]},
+ {h:"7. Waqaf: jenis",head:["Jenis","Keterangan"],rows:[
+  ["Tam","Kalimat sempurna, tidak berkaitan dengan sesudahnya"],
+  ["Kafi","Sempurna lafaz, masih berkaitan makna"],
+  ["Hasan","Berhenti baik, memulai dari sesudahnya kurang baik"],
+  ["Qabih","Merusak makna, dihindari"]
+ ]},
+ {h:"Tanda waqaf di mushaf",head:["Tanda","Arti"],rows:[
+  ["م","Waqaf lazim: sebaiknya berhenti"],
+  ["ط","Muthlaq: lebih baik berhenti"],
+  ["ج","Jaiz: boleh berhenti atau lanjut"],
+  ["ز","Mujawwaz: boleh berhenti, lanjut lebih baik"],
+  ["ص","Murakhkhash: boleh berhenti, lanjut lebih baik"],
+  ["قلى","Berhenti lebih utama"],
+  ["صلى","Lanjut lebih utama"],
+  ["لا","Jangan berhenti (di ujung ayat boleh)"]
+ ]},
+ {h:"Cara membaca akhir kata saat waqaf",head:["Kondisi akhir kata","Ditulis","Dibaca saat waqaf"],rows:[
+  ["Tanwin fathah","عَلِيمًا","عَلِيمَا"],
+  ["Tanwin kasrah atau dhammah","عَلِيمٌ","عَلِيمْ"],
+  ["Ta marbutah","رَحْمَةٌ","رَحْمَهْ"],
+  ["Harakat biasa","الْعَالَمِينَ","الْعَالَمِينْ"]
+ ]},
+ {h:"8. Kesalahan membaca (lahn)",head:["Jenis","Ciri","Contoh"],rows:[
+  ["Lahn jali (nyata)","Mengubah huruf atau harakat, sering mengubah makna. Dilarang.","ح dibaca ه; ع dibaca ء; fathah menjadi dhammah"],
+  ["Lahn khafi (samar)","Mengurangi kesempurnaan tajwid tanpa mengubah makna. Umumnya makruh.","Mad atau ghunnah kurang tepat, tafkhim dan tarqiq keliru, qalqalah tidak terdengar"]
+ ]},
+ {h:"9. Istilah dalam Al-Qur'an",head:["Istilah","Keterangan","Contoh"],rows:[
+  ["Imalah","Memiringkan fathah ke arah kasrah. Hanya di Hud 11:41","مَجْرَاهَا"],
+  ["Isymam","Isyarat dhammah dengan memajukan bibir tanpa suara. Yusuf 12:11","تَأْمَنَّا"],
+  ["Tashil","Meringankan hamzah kedua. Fushshilat 41:44","أَأَعْجَمِيٌّ"],
+  ["Saktah","Berhenti sejenak sekitar 2 harakat tanpa nafas. Empat tempat: Al-Kahf 1, Yasin 52, Al-Qiyamah 27, Al-Muthaffifin 14","عِوَجًا | مَرْقَدِنَا | مَنْ رَاقٍ | بَلْ رَانَ"],
+  ["Naql","Memindahkan harakat hamzah washal ke huruf sebelumnya. Al-Hujurat 49:11","بِئْسَ الِاسْمُ"],
+  ["Hamzah washal","Hanya dibaca saat memulai bacaan","اهْدِنَا"],
+  ["Huruf muqaththa'ah","Huruf terpisah di awal 29 surah, dibaca nama hurufnya","الم"],
+  ["Sajdah","Sujud tilawah: sunnah muakkadah menurut jumhur, wajib menurut Hanafi. Daftar umum memuat 15 tempat","—"]
+ ]}
+];
+
+function rkTabel(x){
+  const isAr=c=>/^[\u0600-\u06FF\u0750-\u077F\s|]+$/.test(c);
+  return '<h2>'+x.h+'</h2><table><thead><tr>'+x.head.map(h=>'<th>'+h+'</th>').join("")+'</tr></thead><tbody>'+
+    x.rows.map(r=>'<tr>'+r.map(c=>'<td'+(isAr(c)?' class="ar"':'')+'>'+c+'</td>').join("")+'</tr>').join("")+'</tbody></table>';
+}
+
+function rangkumanPage(){
+  app.innerHTML='<header class="top"><a class="back" href="#/">Beranda</a></header>'+
+    '<div class="noprint"><h1>Rangkuman</h1><p class="muted">Ringkasan semua bab. Tekan tombol di bawah untuk mencetak atau menyimpan sebagai PDF.</p><button class="btn" id="cetak">Cetak / Simpan PDF</button></div>'+
+    '<div class="rk"><h1 style="text-align:center">Rangkuman Tajwid</h1>'+RK.map(rkTabel).join("")+
+    '<p class="small" style="margin-top:16px">Panjang harakat mengikuti riwayat Hafs dari Ashim. Cocokkan dengan guru tajwid Anda.</p></div>';
+  document.getElementById("cetak").onclick=()=>window.print();
+}
+/* ===== PENGATUR HALAMAN ===== */
+function route(){
+  window.scrollTo(0,0);
+  if(location.hash==="#/audio"){audioPage();return}
+  if(location.hash==="#/ayat"){ayatPage();return}
+  if(location.hash==="#/ujian"){ujianPage();return}
+  if(location.hash==="#/rangkuman"){rangkumanPage();return}
+  const m=location.hash.match(/^#\/bab\/(\d+)$/);
+  if(!m){home();return}
+  const b=BAB.find(x=>x.id===parseInt(m[1],10));
+  if(!b){home();return}
+  chapter(b);
+}
+window.addEventListener("hashchange",route);
+route();
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });
+}
+</script>
+</body>
+</html>
